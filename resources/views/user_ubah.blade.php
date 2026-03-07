@@ -4,7 +4,6 @@
     <br><br>
 
     <form method="post" action="{{ url('/user/ubah_simpan/' . $data->user_id) }}">
-
         @csrf
         @method('PUT')
 
