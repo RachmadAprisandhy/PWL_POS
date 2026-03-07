@@ -10,23 +10,28 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $breadcrumbs = (object) [
-            'title' => 'Data User',
-            'list' => ['Home', 'User']
-        ];
+   public function index()
+{
+    $breadcrumbs = (object) [
+        'title' => 'Data User',
+        'list' => ['Home', 'User']
+    ];
 
-        $page = (object) [
-            'title' => 'Daftar user yang terdaftar dalam sistem',
-        ];
-        $activeMenu = 'User';
-        return view('user.index', [
+    $page = (object) [
+        'title' => 'Daftar user yang terdaftar dalam sistem',
+    ];
+    
+    $activeMenu = 'User';
+
+    $level = LevelModel::all(); 
+
+    return view('user.index', [
         'breadcrumbs' => $breadcrumbs,
         'page' => $page,
-        'activeMenu' => $activeMenu
-        ]);
-    }
+        'activeMenu' => $activeMenu,
+        'level' => $level 
+    ]);
+}
     public function tambah()
     {
         return view('user_tambah');
@@ -67,7 +72,9 @@ class UserController extends Controller
       public function list(Request $request)
       {
          $user = UserModel::select('user_id', 'username', 'nama', 'level_id')->with('level');
-
+            if ($request->level_id) {
+                $user->where('level_id', $request->level_id);
+            }
             return DataTables::of($user)
         // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
         ->addIndexColumn()
