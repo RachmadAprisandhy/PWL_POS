@@ -33,7 +33,7 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    @include('layouts.breadcrumb')
+    @include('layouts.breadcrumbs')
 
         <section class ="content">
             <div class="container-fluid">
